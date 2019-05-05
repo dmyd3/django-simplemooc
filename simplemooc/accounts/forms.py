@@ -9,7 +9,7 @@ class RegisterForm(UserCreationForm):
     #email = forms.EmailField(label="E-Mail") #desnecessario pois já está no fields
     password1 = forms.CharField(label='Senha', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmação de Senha', widget=forms.PasswordInput)
-
+    
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
