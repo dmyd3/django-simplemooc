@@ -12,5 +12,5 @@ def send_mail_template(subject, template_name, context, recipient_list,
     email = EmailMultiAlternatives( subject=subject, body=message_txt, 
             from_email=from_email, to=recipient_list)
     
-    email.attach_alternative(message_txt, "text/html")
+    email.attach_alternative(message_html, "text/html")
     email.send(fail_silently=failt_silently)
