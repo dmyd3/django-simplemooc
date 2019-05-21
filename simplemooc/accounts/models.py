@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.conf import settings
+#from django.db.models.deletion 
+#   import CASCADE, DO_NOTHING,SET,SET_DEFAULT,SET_NULL,PROTECT
 
 import re
 from django.core import validators
