@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 from .models import Courses, Enrollment
 from .forms import ContactCourse
 
@@ -39,10 +41,13 @@ def details(request, slug):
 @login_required
 def enrollment(request,slug)    :
     course = get_object_or_404(Courses, slug=slug)
-    enrollment, created = Enrollment.objects.get_object_or_create(
+    enrollment, created = Enrollment.objects.get_or_create(
         user=request.user, course=course
     )
     if created:
         enrollment.active()
+        messages.success(request, "Você foi inscrito no curso com sucesso")
+    else:
+        messages.info(request, "Você já estava inscrito nesse curso")
     
     return redirect('accounts:dashboard')

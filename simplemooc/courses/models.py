@@ -45,7 +45,9 @@ class EnrollmentManager(models.Manager):
     def search(self, query): #realiza busca com base na string de entrada
         return self.get_queryset().filter(
             models.Q(course__icontains=query) | 
-            models.Q(status__icontains=query) )
+            models.Q(status__icontains=query) |
+            models.Q(user__icontains=query) 
+            )
 
 class Enrollment(models.Model):
 
