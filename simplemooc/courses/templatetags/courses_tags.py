@@ -12,5 +12,7 @@ def my_courses(user):
     return context
 
 #@register.assignment_tag #nao existe no Django2
+@register.simple_tag
 def load_my_courses(user):
-    pass
+    return Enrollment.objects.filter(user=user)
+
