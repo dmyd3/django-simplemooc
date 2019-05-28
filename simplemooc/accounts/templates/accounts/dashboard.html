@@ -3,6 +3,7 @@
 {% load courses_tags %}
 
 {% block content %}
+{% load_my_courses user as enrollments %}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <ul class="breadcrumb">
@@ -18,11 +19,12 @@
                     Bem-vindo {{ user }}
                 </li>
                 
-                {% load_my_courses user as enrollments %}
+                {% block menu_options %}
+                
                 <li class="pure-menu-heading">Meus Cursos</li>
                     {% for enrollment in enrollments %}
                         <li>
-                            <a href="#"> 
+                            <a href="{% url 'courses:announcements' enrollment.course.slug %}"> 
                             <i class="fa fa-book"></i></i>
                             {{ enrollment.course }} 
                             </a> 
@@ -48,6 +50,7 @@
                     Editar Senha
                     </a>
                 </li>
+                {% endblock %}
             </ul>
         </div>
     </div>
@@ -62,8 +65,9 @@
                     </h3>
                     {{ enrollment.course.description|linebreaks }}
                     <div class="pure-controls">
-                        <a href="#" class="pure-button pure-button-primary">Acessar</a>
-                        <a href="#" class="pure-button button-error">Cancelar</a>
+                        <a href="{% url 'courses:announcements' enrollment.course.slug%}" 
+                            class="pure-button pure-button-primary">Acessar</a>
+                        <a href="{% url 'courses:undo_enrollment'  enrollment.course.slug%}" class="pure-button button-error">Cancelar</a>
                     </div>
                 </div>
                 {% empty %}
