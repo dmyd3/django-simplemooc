@@ -1,0 +1,45 @@
+{% extends 'courses/course_dashboard.html' %}
+
+{% block dashboard_content %}
+    <div class="well">
+        <h2>{{ announcement.title}}</h2>
+        {{ announcement.content|linebreaks }}
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+    <div class="well">
+        <h4 id="comments">Comentários
+        <a class="fright" href="#add_comment">Comentar</a></h4>
+        <hr />
+        <p>
+            <strong>Fulano de Tal</strong> disse à 4 dias atrás: <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <hr />
+        <p>
+            <strong>Fulano de Tal</strong> disse à 2 dias atrás: <br />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <hr>
+        <form method="post" class="pure-form pure-form-stacked" id="add_comment">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="password">Comentário</label>
+                    <textarea cols="40" rows="4"></textarea>
+                </div>
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

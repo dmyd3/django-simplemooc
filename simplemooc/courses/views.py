@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Courses, Enrollment
+from .models import Courses, Enrollment, Announcement
 from .forms import ContactCourse
 
 def index(request):
@@ -85,7 +85,29 @@ def announcements(request, slug):
     
     template = "courses/announcements.html"
     context = {
-        'course': course
+        'course': course,
+        'announcements': course.announcements.all()
     }
     return render(request, template, context)
+
+@login_required
+def show_announcement(request, slug, pk):
+    course = get_object_or_404(Courses, slug=slug)
+    if not request.user.is_staff:
+        enrollment = get_object_or_404( Enrollment, 
+            user=request.user, course=course 
+        )
+        if not enrollment.is_approved():
+            messages.error(request, "Você não está inscrito")
+            return redirect('accounts:dashboard')
+    template = 'courses/show_announcement.html'
+    announcement = get_object_or_404(course.announcement.all(), pk=pk)
+
+    context = {
+        'course': course,
+        'announcement': announcement
+    }
+
+    return render(request, template, context)
+
 
