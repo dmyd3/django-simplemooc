@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from simplemooc.core.mail import send_mail_template
+from .models import Comment
 
 class ContactCourse(forms.Form):
 
@@ -20,3 +21,9 @@ class ContactCourse(forms.Form):
         }
         template_name = 'courses/contact_email.html'
         send_mail_template(subject,template_name, context, [settings.CONTACT_EMAIL])
+
+class CommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comment
+        fields = ['comment']
