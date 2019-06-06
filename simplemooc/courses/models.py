@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.utils import timezone
 
 from simplemooc.core.mail import send_mail_template
 
@@ -10,7 +11,6 @@ class CourseManager(models.Manager):
         return self.get_queryset().filter(
             models.Q(name__icontains=query) | 
             models.Q(description__icontains=query) )
-
 
 class Courses(models.Model):
 
@@ -33,6 +33,10 @@ class Courses(models.Model):
     #href="{% url 'courses:details' course.slug %}"
     #<a href="{{ course.get_absolute_url }}">
     
+    def release_lessons(self):
+        today = timezone.now().date()
+        return self.lessons.filter(release_date__gte=today)
+
     def __str__(self):
         return self.name
 
@@ -154,7 +158,12 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+    def is_available(self):
+        if self.release_date:
+            today = timezone.now().date()
+            return self.release_date >= today
+
     class Meta:
         verbose_name = "Aulas"
         verbose_name_plural = "Aulas"
@@ -163,7 +172,7 @@ class Lesson(models.Model):
 class Material(models.Model):
 
     name = models.CharField('Nome', max_length=100)
-    embedded = models.TextField('Vídeo Embutido(embedded', blank=True)
+    embedded = models.TextField('Vídeo Embutido(embedded)', blank=True)
     file = models.FileField('Arquivo', upload_to='lessons/materials',
         blank=True, null=True)
     
