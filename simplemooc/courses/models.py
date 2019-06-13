@@ -31,8 +31,7 @@ class Courses(models.Model):
         return reverse('courses:details',args=[self.slug] )
 
     #href="{% url 'courses:details' course.slug %}"
-    #<a href="{{ course.get_absolute_url }}">
-    
+    #<a href="{{ course.get_absolute_url }}">   
     def release_lessons(self):
         today = timezone.now().date()
         return self.lessons.filter(release_date__gte=today)
@@ -41,8 +40,8 @@ class Courses(models.Model):
         return self.name
 
     class Meta:
-        verbose_name="Curso"
-        verbose_name_plural="Cursos"
+        verbose_name = "Curso"
+        verbose_name_plural = "Cursos"
         ordering = ['name'] #-name : decrescente
 
 class EnrollmentManager(models.Manager):
