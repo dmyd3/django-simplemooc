@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.conf import settings
 
 from simplemooc.courses.models import Courses
-from .forms import ContactCourse
+from simplemooc.courses.forms import ContactCourse
 
 class ContactCourseTestCase(TestCase):
     

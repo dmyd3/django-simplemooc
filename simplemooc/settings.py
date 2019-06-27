@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1zrm=o5d@d5686!vfsa1b_g++n_%t-uvosv!eicxnx5mn&na@d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -38,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #apps
     'simplemooc.core',
     'simplemooc.courses',
     'simplemooc.accounts',
 
+    #libs
     'django_extensions',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +149,29 @@ LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "core:home"
 LOGOUT_URL = "accounts:logout"
 AUTH_USER_MODEL = 'accounts.User'
+
+## HEROKU settings ##
+import django_heroku
+django_heroku.settings(locals())
+
+# import dj_database_url
+# DATABASES['default'] = dj_database_url()
+
+#     #Honor the X-Forwarded-Proto header for request.is_secure()
+# SECURE_PROXY_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+#     #Allow all hosts headers
+# ALLOWED_HOSTS = ['*']
+
+#     # Static asset configuration
+# STATIC_ROOT = 'staticfiles'
+# STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR,'static'),
+# )
+
+try:
+    from simplemooc.local_settings import *
+except ImportError:
+    pass
